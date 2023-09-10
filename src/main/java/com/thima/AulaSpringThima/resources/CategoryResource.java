@@ -14,6 +14,7 @@ public class CategoryResource {
     public ResponseEntity<Category> findAll(){
         List<Category> list = new ArrayList<>();
         list.add(new Category(1L,"Books"));
+        list.add(new Category(2L,"Electronics"));
         return null;
     }
 }
