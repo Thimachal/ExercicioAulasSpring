@@ -4,6 +4,7 @@ import com.thima.AulaSpringThima.entities.Category;
 import com.thima.AulaSpringThima.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public class CategoryService {
     @Autowired
     private CategoryRepository repository;
+    @Transactional
     public List<Category> findAll(){
         return repository.findAll();
     }
