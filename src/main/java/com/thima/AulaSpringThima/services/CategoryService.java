@@ -3,7 +3,8 @@ package com.thima.AulaSpringThima.services;
 import com.thima.AulaSpringThima.dto.CategoryDTO;
 import com.thima.AulaSpringThima.entities.Category;
 import com.thima.AulaSpringThima.repositories.CategoryRepository;
-import com.thima.AulaSpringThima.services.exceptions.EntitynotFoundException;
+import com.thima.AulaSpringThima.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Optional<Category> obj = repository.findById(id);
-        Category entity = obj.orElseThrow(() -> new EntitynotFoundException("Entity not found"));
+        Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
         return new CategoryDTO(entity);
     }
 
@@ -37,8 +38,17 @@ public class CategoryService {
     }
 
     @Transactional
-    public CategoryDTO update(CategoryDTO dto) {
-        Category entity =
+    public CategoryDTO update(Long id, CategoryDTO dto) {
+        try {
+            Category entity = repository.getOne(id);
+            entity.setName(dto.getName());
+            entity = repository.save(entity);
+
+            return new CategoryDTO(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Id not found" + id);
+        }
 
     }
 }

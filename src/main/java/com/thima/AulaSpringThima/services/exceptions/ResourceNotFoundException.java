@@ -1,8 +1,8 @@
 package com.thima.AulaSpringThima.services.exceptions;
 
-public class EntitynotFoundException extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException{
     private static final long serialVersionUID = 1L;
-    public EntitynotFoundException(String msg){
+    public ResourceNotFoundException(String msg){
         super(msg);
     }
 
